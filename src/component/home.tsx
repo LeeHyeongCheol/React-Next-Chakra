@@ -12,10 +12,7 @@ import {
   Td,
   TableCaption,
   TableContainer,
-  Wrap,
-} from "@chakra-ui/react";
-
-import {
+  Box,
   Modal,
   ModalOverlay,
   ModalContent,
@@ -62,13 +59,11 @@ export default function Home() {
 
   return (
     <>
-      <Wrap background={formBackground}>
+      <Box background={formBackground}>
         <Flex
-          position="relative"
-          w="100%"
           justifyContent="flex-end"
-          top={10}
-          left={-20}
+          pt={10}
+          mr={20}
         >
           <Button onClick={toggleColorMode}>Toggle Color Mode</Button>
           <Link
@@ -79,14 +74,8 @@ export default function Home() {
           >
             <Button colorScheme="teal">Login</Button>
           </Link>
-
-          {/* <Link href="register" color="blue.400" _hover={{ color: "blue.500" }}>
-          <Button colorScheme="blackAlpha" ml={5}>
-            Register
-          </Button>
-        </Link> */}
         </Flex>
-        <Flex w="100%" justifyContent="center">
+        <Flex justifyContent="center">
           <Text
             bgGradient="linear(to-l, #7928CA, #FF0080)"
             bgClip="text"
@@ -96,8 +85,10 @@ export default function Home() {
             Welcome to My World!
           </Text>
         </Flex>
-
-        <div style={{ display: "flex", justifyContent: "center" }}>
+        <Flex
+          justifyContent="center"
+          // style={{ display: "flex", justifyContent: "center" }}
+        >
           <Splide
             aria-label="私のお気に入りの画像集"
             options={{
@@ -123,7 +114,7 @@ export default function Home() {
               <Image src={pngegg3} alt="pngegg3" placeholder="blur" />
             </SplideSlide>
           </Splide>
-        </div>
+        </Flex>
         <TableContainer
           width={{ xl: "55%", md: "74%", sm: "91%" }}
           position="relative"
@@ -188,7 +179,7 @@ export default function Home() {
             </ModalContent>
           </Modal>
         )}
-      </Wrap>
+      </Box>
     </>
   );
 }
