@@ -26,8 +26,9 @@ import {
 } from "@chakra-ui/react";
 
 import { useState } from "react";
-import { useQuery } from "react-query";
-import Image from 'next/image';
+import { infoType } from "../@type/info";
+
+import Image from "next/image";
 
 import pngegg1 from "../../public/pngegg1.png";
 import pngegg2 from "../../public/pngegg2.png";
@@ -39,52 +40,25 @@ import "@splidejs/react-splide/css/skyblue";
 import "@splidejs/react-splide/css/sea-green";
 import "@splidejs/react-splide/css/core";
 
-const fetchImg = async () => {
-  const res = await fetch("https://jsonplaceholder.typicode.com/users");
+interface Props {
+  result: infoType[];
+}
 
-  return res.json();
-};
-
-export default function Home() {
-  const result = useQuery("randomimg", fetchImg);
+export default function Top(props: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [id_result, setId_result] = useState(0);
-  const { toggleColorMode } = useColorMode();
-  const formBackground = useColorModeValue("gray.200", "gray.700");
+  const formBackground = useColorModeValue("gray.300", "gray.800");
 
   const modalstate = (id: number) => {
     setId_result(id - 1);
     onOpen();
   };
 
+  console.log(props);
+
   return (
     <>
       <Box background={formBackground}>
-        <Flex
-          justifyContent="flex-end"
-          pt={10}
-          mr={20}
-        >
-          <Button onClick={toggleColorMode}>Toggle Color Mode</Button>
-          <Link
-            href="/login"
-            color="blue.400"
-            _hover={{ color: "blue.500" }}
-            ml={5}
-          >
-            <Button colorScheme="teal">Login</Button>
-          </Link>
-        </Flex>
-        <Flex justifyContent="center">
-          <Text
-            bgGradient="linear(to-l, #7928CA, #FF0080)"
-            bgClip="text"
-            fontSize="6xl"
-            fontWeight="extrabold"
-          >
-            Welcome to My World!
-          </Text>
-        </Flex>
         <Flex
           justifyContent="center"
           // style={{ display: "flex", justifyContent: "center" }}
@@ -131,7 +105,7 @@ export default function Home() {
               </Tr>
             </Thead>
             <Tbody cursor="pointer">
-              {result.data?.map((user: any) => (
+              {props.result?.map((user: any) => (
                 <Tr onClick={() => modalstate(user.id)} key={user.id}>
                   <Td>{user.name}</Td>
                   <Td>{user.email}</Td>
@@ -148,26 +122,26 @@ export default function Home() {
             </Tfoot>
           </Table>
         </TableContainer>
-        {result.data && (
-          <Modal isOpen={isOpen} onClose={onClose}>
+        {props.result && (
+          <Modal isOpen={isOpen} onClose={onClose} motionPreset="slideInBottom">
             <ModalOverlay />
             <ModalContent>
-              <ModalHeader>{result.data[id_result].name}</ModalHeader>
+              <ModalHeader>{props.result[id_result].name}</ModalHeader>
               <ModalCloseButton />
               <ModalBody>
-                Email:{result.data[id_result].email}
+                Email:{props.result[id_result].email}
                 <br />
-                Phone:{result.data[id_result].phone}
+                Phone:{props.result[id_result].phone}
                 <br />
                 Address
                 <br />
-                street:{result.data[id_result].address.street}
+                street:{props.result[id_result].address.street}
                 <br />
-                suite:{result.data[id_result].address.suite}
+                suite:{props.result[id_result].address.suite}
                 <br />
-                city:{result.data[id_result].address.city}
+                city:{props.result[id_result].address.city}
                 <br />
-                zipcode:{result.data[id_result].address.zipcode}
+                zipcode:{props.result[id_result].address.zipcode}
                 <br />
               </ModalBody>
               <ModalFooter>

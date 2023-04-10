@@ -8,3 +8,4 @@ module.exports = {
     domains: ["www.pakutaso.com"],
   },
 };
+
