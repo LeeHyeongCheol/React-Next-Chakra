@@ -25,7 +25,7 @@ import {
   useColorMode,
 } from "@chakra-ui/react";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { infoType } from "../@type/info";
 
 import Image from "next/image";
@@ -49,28 +49,52 @@ export default function Top(props: Props) {
   const [id_result, setId_result] = useState(0);
   const formBackground = useColorModeValue("gray.300", "gray.800");
 
+  const content = "Hi. I'm LHC, \n Front-end Developer.";
+  const text = document.querySelector("#text");
+  let i = 0;
+
   const modalstate = (id: number) => {
     setId_result(id - 1);
     onOpen();
   };
 
-  console.log(props);
+  function typing() {
+    let txt = content[i++];
+    if (text != null) {
+      text.innerHTML += txt === "\n" ? "<br/>" : txt;
+      if (i > content.length) {
+        text.textContent = "";
+        i = 0;
+      }
+    }
+  }
+
+  setInterval(typing, 200);
 
   return (
     <>
-      <Box background={formBackground}>
-        <Flex
-          justifyContent="center"
-          // style={{ display: "flex", justifyContent: "center" }}
+      <Box background={formBackground} position="relative">
+        <Box
+          position="relative"
+          w="100%"
+          h={500}
+          mt={90}
+          backgroundColor="blackAlpha.400"
         >
+          <Text
+            position="relative"
+            top="28%"
+            left="6%"
+            id="text"
+            fontSize="5xl"
+          ></Text>
+        </Box>
+        <Flex justifyContent="center" position="relative">
           <Splide
             aria-label="私のお気に入りの画像集"
             options={{
-              autoplay: true,
-              interval: 3000,
               rewind: true,
               width: "50%",
-              gap: "1rem",
             }}
           >
             <SplideSlide>
